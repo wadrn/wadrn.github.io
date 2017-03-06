@@ -4,21 +4,20 @@ title: Projects
 permalink: /projects/
 ---
 
-### [Project 1](https://github.com/tux4kids/tuxmania) 
+### [百度前端学院练习项目](https://github.com/wadrn/baidu_webtask_exercise) 
 
 
 ***
 
-### [Project 2](https://github.com/AkshayAgarwal007/Moodly)
-
+### [前端练习](https://github.com/wadrn/web-end)
 
 
 
 ***
 
 ## Other Projects
-
-
+### [Vue](https://github.com/wadrn/Vue)
+### [博客项目](https://github.com/wadrn/wadrn.github.io)
 
 ## Contact me
 
