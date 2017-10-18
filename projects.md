@@ -6,7 +6,6 @@ permalink: /projects/
 
 ### [百度前端学院练习项目](https://github.com/wadrn/baidu_webtask_exercise) 
 
-
 ***
 
 ### [前端练习](https://github.com/wadrn/web-end)
@@ -17,7 +16,9 @@ permalink: /projects/
 
 ## Other Projects
 ### [Vue](https://github.com/wadrn/Vue)
-### [博客项目](https://github.com/wadrn/wadrn.github.io)
+### [博客项目](https://github.com/wadrn/react/tree/master/myblog)
+
+### [leetcode刷题训练](https://github.com/wadrn/leetcode-)
 
 ## Contact me
 
