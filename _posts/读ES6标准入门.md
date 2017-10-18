@@ -1,0 +1,439 @@
+# ES6
+##变量的解构赋值
+###数组的解构赋值
+var [a,b,c] = [1,2,3];
+###对象的解构赋值
+var {bar,foo} = {foo:'aaa',bar:'bbb'};
+
+###字符串的解构赋值
+const [a,b,c,d,e] ='hello';
+a//'h'
+b//'e'
+c//'l'
+d//'l'
+e//'o'
+###数值和布尔值的解构赋值
+### 函数参数的解构赋值
+###圆括号问题
+不能使用圆括号的情况
+1. 变量声明语句中，模式不能带有圆括号
+2. 函数参数中，模式不能带有圆括号
+3. 不能将整个模式或嵌套模式中的一层放在圆括号中。
+###用途
+1. 交换变量的值
+[x,y] = [y,x];
+2. 从函数返回多个值
+3. 函数参数的定义
+4. 提取JSON数据
+5. 函数参数的默认值
+6. 遍历Map结构
+任何部署了Iterator接口的对象，都可以用for...of循环遍历。
+
+###数组的扩展
+#### Array.from()
+ 用于将两类对象转化为真正的数组
+1. 类数组对象：参数 ，DOM操作返回的NodeList集合
+2. 可遍历（iterable）对象（set 和map）：字符串／set 结构
+
+Array.from()可以接受两个参数
+第二个参数类似数组的map方法，用来对每个元素进行处理。
+#### Array.of()
+用于将一组值转换为数组
+构造函数Array()在参数个数为1时，实际是指定数组的长度。
+####find()/findIndex()
+find()用于找出第一个符合条件的数组成员，**参数是一个回调函数**，所有数组或成员依次执行该回调函数，直到找出第一个返回值为true的成员。
+返回值：该成员
+findIndex()只是返回值不同
+返回值：返回第一个符合条件的数组成员的位置。
+####fill(content,(start),(end))
+用content填充数组
+####entries()/keys()/values()
+对键值对、键名、键值得遍历
+####includes()
+####rest参数
+...变量名，用于获取多余的参数
+####...扩展运算符
+将一个数组转为用逗号分隔的参数序列
+替代数组的apply方法
+#####应用
+1. 合并数组
+[...arr1,...arr2,...arr3]
+2. 与解构赋值结合
+3. 函数的返回值
+4. 字符串
+5. 类数组对象
+
+####name属性
+
+```
+function foo(){}
+foo.name //'foo'
+```
+###箭头函数
+
+```
+var f=v=>v;
+var f = function(v){
+return v;
+}
+var f =()=>5;
+```
+注意点
+1. 函数体内的this对象就是定义时所在的对象，而不是使用时所在的对象。
+
+```
+function foo()}
+setTimeout(()=>{
+console.log('id':this.id);
+},1000);
+}
+foo.call({id:42});
+//id:42
+
+```
+###尾调用优化
+只保留内层函数的调用帧
+###对象的扩展
+ES6允许在对象中只写属性名，不写属性值。
+
+```
+function f(x,y){
+return {x,y};
+}
+//等同于
+function f(x,y){
+return {x:x,y:y};
+}
+module.exports ={getItem,setItem}
+//等同于
+module.exports ={
+getItem :getItem,
+setItem:setItem
+};
+```
+####Object.is()
+用来比较两个值是否严格相等
+####Object.assign()
+用来将源对象的所有可枚举属性复制到目标对象。
+至少两个参数
+###Proxy实例方法
+get()用于拦截某个属性的读取操作
+set()用于拦截某个属性的赋值操作
+apply()拦截函数的调用、call和apply操作
+has()隐藏某些属性，不被in操作符发现
+construct()拦截new命令
+deleteProperty() 拦截delete操作
+defineProperty() 拦截Object.defineProperty
+###Promise
+Promise是一个对象，用来传递异步操作的消息，代表了某个未来才会知道结果的事件（通常是一个异步操作）。
+####Promise对象有两个特点：
+1. 对象的状态不受外界影响
+Promise对象代表一个异步操作，有三种状态：Pending、Resolved、Rejected。只有异步操作的结果可以决定当前是哪一种状态，任何其他操作都无法改变这个状态。
+2. 一旦状态改变就不会再变，任何时候都可以得到这个结果。
+pending->resolved
+pending->rejected
+只要其中之一发生，状态就凝固不会再变，会一直保持这个结果。就算改变已经发生，再对Promise添加回调函数也会立即得到这个结果。
+**缺点：**
+1. 无法取消，一旦新建就会立即执行
+2. 若不设置回调函数，内部抛出的错误不会反应到外部。
+3. 处于pending状态时，无法得知目前进展到哪一阶段。
+4. 若某些事件不断反复发生，使用stream模式比部署Promise更好。
+####用法
+Promise对象是一个构造函数，用来生成Promise实例。
+
+```
+var promise = new Promise(resolve,reject){
+    //...some code
+    if(/*异步操作成功*/){
+        resolve(value);
+    }else{
+        reject(error);
+    }
+});
+```
+resolve将promise状态从pending->resolved
+reject将promise状态从pending->rejected
+Promise实例生成后，可以用then方法分别指定resolved状态和rejected状态的回调函数。
+
+```
+promise.then(function(value){
+    //success
+},function(value){
+    //failure
+});
+```
+####例子
+function timeout(ms){
+    return new Promise((resolve,reject)=>{
+        setTimeout(resolve,ms,'done');
+     });
+}
+timeout(100).then((value)=>{
+    console.log(value);
+});
+如果调用resolve函数和reject函数时带有参数，那么这些参数会被传递给回调函数。
+reject函数的参数通常是error对象的实例，resolve函数的参数可以是正常的值或另外一个promise实例，表示异步操作的结果可能是一个值，也可能是另一个异步操作。
+链式的then可以指定一组按照次序调用的回调函数
+
+
+```
+var someAsyncThing = function(){
+    return new Promise(function(resolve,reject){
+    //下面一行会报错，因为x没有声明
+    var x=1;
+        resolve(x+2);
+    });
+};
+someAsyncThing().catch(function(error){
+console.log('oh no',error);
+})
+.then(function(){
+console.log('carry on');
+});
+```
+####Promise.all()
+用于将多个Promise实例包装成一个新的Promise实例,
+`var p = Promise.all([p1,p2,p3]);`
+参数不一定是数组，但一定具有Iterator接口
+p的状态由p1、p2、p3决定，分两种情况
+1. p1 p2 p3 状态都变成fulfilled，p的状态才会变成fulfilled，p1 p2 p3的返回值组成一个数组，传递给p的回调函数
+2. 只要p1 p2 p3中任意一个被rejected，p的状态就变为rejected，此时第一个被rejected的实例的返回值会传递给p的回调函数。
+
+####Promise.race()
+`var p = Promise.race([p1,p2,p3]);`
+只要其中之一先改变状态，p的状态就改变
+####Promise.resolve()
+将现有对象转为Promise对象
+###Generator函数
+Generator函数  --- 异步编程解决方案
+可以理解为一个状态机（封装了多个内部状态）
+**返回**：遍历器对象
+**特征**：
+1. function命令与函数名之间有一个*号
+2. 函数体内部使用yield语句定义不同的内部状态
+
+
+```javascript
+function* helloworldGenerator(){
+    yield 'hello';
+    yield 'world';
+    return 'ending';
+}
+var hw = helloworldGenerator();
+```
+此段表示：函数有三个状态：hello、world、return
+调用generator函数之后，该函数不执行，返回的也不是函数运行结果，而是一个指向内部状态的指针对象（遍历器对象）
+必须调用遍历器对象的next方法，使得指针移向下一个状态
+generator函数是分段执行的，yield语句是暂停执行的标记，而next方法可以恢复执行。
+####next方法
+yield语句本身没有返回值（undefined），next方法可以带一个参数，该参数就会被当做上一个yield语句的返回值。
+####for ... of
+for...of循环可以自动遍历generator
+####yield*语句
+用来在一个Generator函数里面执行另一个Generator函数。
+
+```babel
+function* foo(){
+    yield 1;
+    yield 2;
+}
+function* bar(){
+    yield 3;
+    yield* foo();
+    yield 4;
+}
+for(let v of bar()){
+    console.log(v);
+}
+//3
+//1
+//2
+//4
+```
+如果yield命令后跟一个遍历器对象，那么需要在yield命令后面加上*，表明返回的是一个遍历器对象。
+
+**任何数据结构只要有Iterator接口，就可以用yield*遍历**
+取出嵌套数组的所有成员
+```babel
+function* iterTree(tree){
+    if(Array.isArray(tree)){
+        for(let i=0;i<tree.length;i++){
+            yield* iterTree(tree[i]);
+        }
+    }else{
+        yield tree;
+    }
+}
+const tree = [1,[2,3,4],5,[6,7],8];
+for(let x of iterTree(tree)){
+    console.log(x);
+}
+```
+遍历完全二叉树
+
+```babel
+function Tree(left,label,right){
+    this.left =left;
+    this.label = label;
+    this.right = right;
+}
+function* inorder(t){
+    if(t){
+        yield* inorder(t.left);
+        yield t.label;
+        yield* inorder(t.right);
+    }
+}
+function makeTree(arr){
+    if(arr.length ===1){
+        return new Tree(null,arr[0],null);
+    }
+    return new Tree(makeTree(arr[0]),arr[1],makeTree(arr[2]));
+}
+let tree = makeTree([[[1],2,[3]],4,[[5],6,[7]]]);
+var result =[];
+for(let node of inorder(tree)){
+    result.push(node);
+}
+console.log(result);
+
+```
+####generator函数的this
+要把generator函数当作正常的构造函数，可以通过如下方法：首先生成一个空对象，使用bind方法绑定generator内部的this。
+
+```babel
+```
+#####应用
+1. 异步操作的同步化表达（处理异步操作，改写回调函数）
+
+```babel
+
+function* loadUI(){
+    showLoadingScreen();
+    yield loadUIDataAsynchronously();
+    hideLoadingScreen();
+}
+var loader = loadUI();
+//加载UI
+loader.next();
+//卸载UI
+loader.next();
+```
+AJAX操作
+
+```babel
+function* main(){
+    var result =yield request("http://some.url");
+    var resp = JSON.parse(result);
+    console.log(resp.value);
+}
+function request(url){
+    makeAjaxCall(url,function(response){
+        it.next(response);
+    });
+}
+var it = main();
+it.next();
+```
+2. 部署Iterator接口
+利用generator函数可以在任意对象上部署Iterator接口
+
+```babel
+function* iterEntries(obj){
+    let keys = Object.keys(obj);
+    for(let i=0;i<keys.length;i++){
+        let key = keys[i];
+        yield [key,obj[key]];
+    }
+}
+let myObj ={foo:3,bar:7};
+for(let [key,value] of iterEntries(myObj)){
+    console.log(key,value);
+}
+```
+3. 作为数据结构
+generator可以看做一个数组结构，因为其可以返回一系列的值，意味着可以对任意表达式提供类似数组的接口。
+
+####async函数
+async函数就是generator函数的语法唐
+async对Generator的改进：
+1. 内置执行器
+2. 上面的代码调用了asyncReadFile函数，然后它自动执行，输出最后结果。
+#####async函数用法
+指定多少毫秒以后输出一个值：
+
+```babel
+function timeout(ms){
+    return new Promise((resolve)=>{
+        setTimeout(resolve,ms);
+    });
+}
+async function asyncPrint(value,ms){
+    await timeout(ms);
+    console.log(value);
+}
+asyncPrint('hello',5000); //五秒钟后输出hello
+console.log('later'); //先输出later
+```
+###Class
+构造函数的语法糖
+```babel
+class Point{
+    constructor(x,y){
+        this.x =x;
+        this.y =y;
+    }
+    toString(){
+        return this.x +','+this.y;
+    }
+}
+let c = new Point(3,5);
+console.log(c.toString());
+```
+####实例对象
+使用new生成实例对象，实例的属性除非显示定义在其本身（即this对象）上，否则都是定义在原型上（即Class）上。
+####name属性
+name属性总是返回紧跟在class关键字后面的类名。
+####Class表达式
+
+```babel
+const MyClass = class Me{
+    getClassName(){
+        return Me.name;
+    }
+};
+```
+**类的名字是MyClass而不是Me,Me只是在Class内部代码中使用，指代当前类**
+####Class的继承
+通过extends关键字
+子类必须在constructor中调用super方法，因为子类没有自己的this对象，而是继承了父类的this对象。
+在子类的构造函数中，只有调用super之后，才可以使用this关键字，否则会报错。
+#####类的prototype属性和_proto_属性
+1. 子类的_proto_属性表示构造函数的继承，总是指向父类，
+2. 子类prototype属性的_proto_属性表示方法的继承，总是指向父类的prototype属性
+#####new.target属性                             
+new.target返回new命令所作用的构造函数。如果构造函数不是通过new命令调用的，那么new.target会返回undefined。
+**子类继承父类时new.target会返回子类**
+利用这个特点，可以写出不能实例化的基类
+
+```babel
+class Shape{
+    constructor(){
+        if(new.target ===Shape){
+            throw new Error("此类不能实例化");
+        }
+    }
+}
+class Square extends Shape{
+    constructor(length,width){
+        super();
+        //...
+    }
+}
+var x = new Shape();   //报错
+var y = new Square(3,4);  // 正确
+```
+###修饰器
+修饰器（Decorator）是一个表达式，用于修改类的行为，修饰器对类的行为的改变，是在代码编译时发生的，而不是在运行时。
+修饰器只能用于类和类的方法，不能用于函数，因为存在函数提升。
+
