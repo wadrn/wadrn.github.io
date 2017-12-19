@@ -1,3 +1,7 @@
+
+
+#基于jekyll + github 搭建的个人博客
+#使用了next主题
 # NexT
 
 > 精于心，简于形
@@ -8,7 +12,7 @@ NexT 是由 [Hexo NexT](https://github.com/iissnan/hexo-theme-next) 移植而来
 
 [![Join the chat at https://gitter.im/simpleyyt/jekyll-theme-next](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/jekyll-theme-next/lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-![NexT Schemes](http://iissnan.com/nexus/next/next-schemes.jpg)
+![doreen](http://ojz5yydwd.bkt.clouddn.com/blog.png)
 
 
 ## 浏览器支持 Browser support
@@ -27,9 +31,3 @@ NexT 主旨在于简洁优雅且易于使用，所以首先要尽量确保 NexT 
 
 NexT is built for easily use with elegant appearance. First things first, always keep things simple.
 
-
-## 捐赠
-
-支付宝捐赠链接还是要有的，万一真的有人捐呢。
-
-![支付宝扫码捐赠](http://p1.bpimg.com/567571/9a4a158daee8aa69.png)
