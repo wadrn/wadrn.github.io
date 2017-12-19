@@ -1,7 +1,11 @@
 
 
 # 基于jekyll + github 搭建的个人博客
+
+点击 访问我的博客主页 ->  [doreen's notes](https://wadrn.github.io)
+
 # 使用了next主题
+
 
 
 # NexT
