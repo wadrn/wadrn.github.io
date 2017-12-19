@@ -1,7 +1,9 @@
 
 
-#基于jekyll + github 搭建的个人博客
-#使用了next主题
+# 基于jekyll + github 搭建的个人博客
+# 使用了next主题
+
+
 # NexT
 
 > 精于心，简于形
