@@ -1,15 +1,6 @@
 ---
-layout: blog
+layout: layout
 ---
 
-<article class="post">
- <div class="space-extra-small">
- </div>
-
-  <div class="entry">
-    {{ content }}
-  </div>
-
-  {% include disqus.html %}
-</article>
-
+{% assign __ = site.data.languages[site.language] %}
+{% include post.html %}
