@@ -1,0 +1,1053 @@
+
+<!doctype html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/assets/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/assets/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/assets/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="FE,css," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Doreen's Notes" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="CSS3 语法">
+<meta name="keywords" content="FE, css">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSS语法">
+<meta property="og:url" content="http://localhost:4000/fe/2017/03/14/CSS3-%E8%AF%AD%E6%B3%95/">
+<meta property="og:site_name" content="Doreen's Notes">
+<meta property="og:description" content="CSS3 语法">
+<meta property="og:locale" content="en">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CSS语法">
+<meta name="twitter:description" content="CSS3 语法">
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://localhost:4000/"/>
+
+
+
+
+
+  <title>CSS语法</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Doreen's Notes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+<div id="posts" class="posts-expand">
+  
+  
+
+  
+
+  
+  
+  
+
+  <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://localhost:4000/fe/2017/03/14/CSS3-%E8%AF%AD%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Doreen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="assets/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Doreen's Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+          
+          
+            CSS语法
+          
+        </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-14T00:00:00+08:00">
+                2017-03-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/FE" itemprop="url" rel="index">
+                    <span itemprop="name">FE</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+            
+                <div class="post-description">
+                    
+                </div>
+            
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="css3-语法">CSS3 语法</h2>
+
+<p>first-of-type :用来定位一个父元素下的某个类型的第一个子元素。</p>
+
+<p>nth-of-type (n):</p>
+
+<p>last-of-type:</p>
+
+<p>only-child:选择父元素中只有一个子元素，且只有唯一的一个子元素。</p>
+
+<p>only-of-type:一个父元素有很多元素，而其中只有一种类型的子元素是唯一的，选中这个元素中唯一一个类型的子元素。</p>
+
+<p>enabled: 用于选择可用表单元素</p>
+
+<p>disabled：用于选择不可用表单元素</p>
+
+<p>checked:选中状态 常用于自定义样式</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"#"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"wrapper”&gt;
+		&lt;div class="</span><span class="na">box</span><span class="err">"</span><span class="nt">&gt;</span>
+		  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"radio"</span> <span class="na">checked=</span><span class="s">"checked"</span>  <span class="na">id=</span><span class="s">"boy"</span> <span class="err">''</span><span class="na">name=</span><span class="s">"1"</span> <span class="nt">/&gt;&lt;span&gt;&lt;/span&gt;</span>
+		<span class="nt">&lt;/div&gt;</span>
+		<span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"boy"</span><span class="nt">&gt;</span>男<span class="nt">&lt;/label&gt;</span>
+	 <span class="nt">&lt;/div&gt;</span>  
+	 <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"wrapper"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"box"</span><span class="nt">&gt;</span>
+		  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"radio"</span>  <span class="na">id=</span><span class="s">"girl"</span> <span class="na">name=</span><span class="s">"1"</span>  <span class="nt">/&gt;&lt;span&gt;&lt;/span&gt;</span>
+	<span class="nt">&lt;/div&gt;</span>
+	<span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"girl"</span><span class="nt">&gt;</span>女<span class="nt">&lt;/label&gt;</span>
+	<span class="nt">&lt;/div&gt;</span>
+	<span class="nt">&lt;/form&gt;</span>
+</code></pre></div></div>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="nc">.box</span><span class="p">{</span>
+	<span class="nl">display</span><span class="p">:</span><span class="n">inlne-block</span><span class="p">;</span>
+	 <span class="nl">width</span><span class="p">:</span> <span class="m">30px</span><span class="p">;</span>
+	  <span class="nl">height</span><span class="p">:</span> <span class="m">30px</span><span class="p">;</span>
+	  <span class="nl">margin-right</span><span class="p">:</span> <span class="m">10px</span><span class="p">;</span>
+	  <span class="nl">position</span><span class="p">:</span> <span class="nb">relative</span><span class="p">;</span>
+	  <span class="nl">background</span><span class="p">:</span> <span class="no">orange</span><span class="p">;</span>
+	  <span class="nl">vertical-align</span><span class="p">:</span> <span class="nb">middle</span><span class="p">;</span>
+	  <span class="nl">border-radius</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+	<span class="p">}</span>
+	<span class="nc">.box</span> <span class="nt">input</span> <span class="p">{</span>
+	  <span class="nl">opacity</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+	  <span class="nl">position</span><span class="p">:</span> <span class="nb">absolute</span><span class="p">;</span>
+	  <span class="nl">top</span><span class="p">:</span><span class="m">0</span><span class="p">;</span>
+	  <span class="nl">left</span><span class="p">:</span><span class="m">0</span><span class="p">;</span>
+	  <span class="nl">width</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+	  <span class="nl">height</span><span class="p">:</span><span class="m">100%</span><span class="p">;</span>
+	  <span class="nl">z-index</span><span class="p">:</span><span class="m">100</span><span class="p">;</span><span class="c">/*使input按钮在span的上一层，不加点击区域会出现不灵敏*/</span>
+	<span class="p">}</span>
+	
+	<span class="nc">.box</span> <span class="nt">span</span> <span class="p">{</span> 
+	  <span class="nl">display</span><span class="p">:</span> <span class="nb">block</span><span class="p">;</span>
+	  <span class="nl">width</span><span class="p">:</span> <span class="m">10px</span><span class="p">;</span>
+	  <span class="nl">height</span><span class="p">:</span> <span class="m">10px</span><span class="p">;</span>
+	  <span class="nl">border-radius</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+	  <span class="nl">position</span><span class="p">:</span> <span class="nb">absolute</span><span class="p">;</span>
+	  <span class="nl">background</span><span class="p">:</span> <span class="m">#fff</span><span class="p">;</span>
+	  <span class="nl">top</span><span class="p">:</span> <span class="m">50%</span><span class="p">;</span>
+	  <span class="nl">left</span><span class="p">:</span><span class="m">50%</span><span class="p">;</span>
+	  <span class="nl">margin</span><span class="p">:</span> <span class="m">-5px</span> <span class="m">0</span>  <span class="m">0</span> <span class="m">-5px</span><span class="p">;</span>
+	  <span class="nl">z-index</span><span class="p">:</span><span class="m">1</span><span class="p">;</span>
+	<span class="p">}</span>
+	
+	<span class="nt">input</span><span class="o">[</span><span class="nt">type</span><span class="o">=</span><span class="s1">"radio"</span><span class="o">]</span> <span class="o">+</span> <span class="nt">span</span> <span class="p">{</span>
+	  <span class="nl">opacity</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+	
+	<span class="p">}</span>
+	<span class="nt">input</span><span class="o">[</span><span class="nt">type</span><span class="o">=</span><span class="s1">"radio"</span><span class="o">]</span><span class="nd">:checked</span> <span class="o">+</span> <span class="nt">span</span> <span class="p">{</span>
+	  <span class="nl">opacity</span><span class="p">:</span> <span class="m">1</span><span class="p">;</span>
+	<span class="p">}</span>
+</code></pre></div></div>
+
+<p>selection伪元素， 匹配突出显示的文本</p>
+
+<p>:read-only</p>
+
+<p>before/after 用来给元素的前面或后面插入内容，常和content配合使用，使用场景最多的是清除浮动。</p>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">.clearfix</span><span class="nd">::before</span><span class="o">,</span>
+	<span class="nc">.clearfix</span><span class="nd">::after</span> <span class="p">{</span>
+	    <span class="nl">content</span><span class="p">:</span> <span class="s1">"."</span><span class="p">;</span>
+	    <span class="nl">display</span><span class="p">:</span> <span class="nb">block</span><span class="p">;</span>
+	    <span class="nl">height</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+	    <span class="nl">visibility</span><span class="p">:</span> <span class="nb">hidden</span><span class="p">;</span>
+	<span class="p">}</span>
+	<span class="nc">.clearfix</span><span class="nd">:after</span> <span class="p">{</span><span class="nl">clear</span><span class="p">:</span> <span class="nb">both</span><span class="p">;}</span>
+	<span class="nc">.clearfix</span> <span class="p">{</span><span class="py">zoom</span><span class="p">:</span> <span class="m">1</span><span class="p">;}</span>
+</code></pre></div></div>
+
+<h3 id="实现阴影框效果">实现阴影框效果</h3>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">.effect</span><span class="nd">::before</span><span class="o">,</span> <span class="nc">.effect</span><span class="nd">::after</span><span class="p">{</span>
+	    <span class="nl">content</span><span class="p">:</span><span class="s1">""</span><span class="p">;</span>
+	    <span class="nl">position</span><span class="p">:</span><span class="nb">absolute</span><span class="p">;</span>
+	    <span class="nl">z-index</span><span class="p">:</span><span class="m">-1</span><span class="p">;</span>
+	    <span class="nl">-webkit-box-shadow</span><span class="p">:</span><span class="m">0</span> <span class="m">0</span> <span class="m">20px</span> <span class="n">rgba</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0.8</span><span class="p">);</span>
+	    <span class="nl">-moz-box-shadow</span><span class="p">:</span><span class="m">0</span> <span class="m">0</span> <span class="m">20px</span> <span class="n">rgba</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0.8</span><span class="p">);</span>
+	    <span class="nl">box-shadow</span><span class="p">:</span><span class="m">0</span> <span class="m">0</span> <span class="m">20px</span> <span class="n">rgba</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0.8</span><span class="p">);</span>
+	    <span class="nl">top</span><span class="p">:</span><span class="m">50%</span><span class="p">;</span>
+	    <span class="nl">bottom</span><span class="p">:</span><span class="m">0</span><span class="p">;</span>
+	    <span class="nl">left</span><span class="p">:</span><span class="m">10px</span><span class="p">;</span>
+	    <span class="nl">right</span><span class="p">:</span><span class="m">10px</span><span class="p">;</span>
+	    <span class="nl">-moz-border-radius</span><span class="p">:</span><span class="m">100px</span> <span class="p">/</span> <span class="m">10px</span><span class="p">;</span>
+	    <span class="nl">border-radius</span><span class="p">:</span><span class="m">100px</span> <span class="p">/</span> <span class="m">10px</span><span class="p">;</span>
+	<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="给背景图添加蒙板效果可以用before">给背景图添加蒙板效果可以用before</h3>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="nt">a</span><span class="nd">::before</span><span class="p">{</span>
+	            <span class="nl">content</span><span class="p">:</span><span class="s1">""</span><span class="p">;</span>
+	            <span class="nl">display</span><span class="p">:</span> <span class="nb">block</span><span class="p">;</span>
+	            <span class="nl">height</span><span class="p">:</span> <span class="m">120px</span><span class="p">;</span>
+	            <span class="nl">width</span><span class="p">:</span> <span class="m">120px</span><span class="p">;</span>
+	            <span class="nl">border</span><span class="p">:</span> <span class="m">5px</span> <span class="nb">solid</span> <span class="m">#fff</span><span class="p">;</span>
+	            <span class="nl">border-radius</span><span class="p">:</span> <span class="m">50%</span><span class="p">;</span>
+	            <span class="nl">position</span><span class="p">:</span> <span class="nb">absolute</span><span class="p">;</span>
+	            <span class="nl">left</span><span class="p">:</span> <span class="m">50%</span><span class="p">;</span>
+	            <span class="nl">margin-left</span><span class="p">:</span> <span class="m">-60px</span><span class="p">;</span>
+	            <span class="nl">z-index</span><span class="p">:</span> <span class="m">99999</span><span class="p">;</span>
+	            <span class="nl">top</span><span class="p">:</span> <span class="m">-80px</span><span class="p">;</span>
+	            <span class="nl">background</span><span class="p">:</span> <span class="n">rgba</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0.3</span><span class="p">);</span>
+	     <span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="css变形和动画">CSS变形和动画</h3>
+
+<p>动画效果：transform：（属性值）</p>
+
+<p><strong>rotate(xdeg)</strong>设置一个角度值，用来指定旋转的幅度。如果这个值为正值，元素相对原点中心顺时针旋转；如果这个值为负
+值，元素相对原点中心逆时针旋转</p>
+
+<p><strong>skew(x,y)</strong>使元素在水平和垂直方向同时扭曲</p>
+
+<p><strong>skewX(x)</strong>仅使元素在水平方向扭曲变形（X轴扭曲变形）</p>
+
+<p><strong>skewY(y)</strong>仅使元素在竖直方向扭曲变形</p>
+
+<p><strong>scale(X,Y)</strong>使元素水平方向和垂直方向同时缩放（也就是X轴和Y轴同时缩放）</p>
+
+<p><strong>translate(x,y)</strong> 使用translate()函数，可以把元素从原来的位置移动，而不影响在X、Y轴上的任何Web组件。常用于实现在不确定宽高的元素实现水平和垂直居中。</p>
+
+<p><strong>transition</strong></p>
+
+<p>transition-property
+transition-timing-function
+transition-delay**</p>
+
+<p>关键帧KeyFrames
+以“@keyframes”开头，后面紧跟着是动画名称加上一对花括号“…”，括号中就是一些不同时间段样式规则.
+	@keyframes changecolor{
+	  0%{
+	   background: red;
+	  }
+	  100%{
+	    background: green;
+	  }
+	}
+通过animation调用</p>
+
+<p>animation-duration</p>
+
+<p>animation-name</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>animation-timing-function:ease</td>
+      <td>linear</td>
+      <td>ease-in</td>
+      <td>ease-out</td>
+      <td>ease-in-out</td>
+      <td>cubic-bezier(&lt;number&gt;, &lt;number&gt;, &lt;number&gt;, &lt;number&gt;) [, ease</td>
+      <td>linear</td>
+      <td>ease-in</td>
+      <td>ease-out</td>
+      <td>ease-in-out</td>
+      <td>cubic-bezier(&lt;number&gt;, &lt;number&gt;, &lt;number&gt;, &lt;number&gt;)](#)*</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td>animation-iteration-count: infinite</td>
+      <td>&lt;number&gt; [, infinite</td>
+      <td>&lt;number&gt;](#)*</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>animation-play-state:paused/running</p>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            
+            <a href="/tag/#/FE" rel="tag"># FE</a>
+          
+            
+            <a href="/tag/#/css" rel="tag"># css</a>
+          
+        </div>
+      
+
+      
+      
+      
+      
+      
+
+      
+      
+        <div class="post-nav" id="post-nav-id">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/fe/react/2017/03/14/React/" rel="next" title="React分析">
+                <i class="fa fa-chevron-left"></i> React分析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/algorithm/2017/03/10/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="prev" title="动态规划算法">
+                动态规划算法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+      
+
+      
+    </footer>
+  </article>
+
+  <div class="post-spread">
+    
+  </div>
+</div>
+
+<div id="gitment_container"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+    owner: 'wadrn',
+    repo: 'wadrn.github.io',
+    oauth: {
+        client_id: 'c94d97ad9177eba10783',
+        client_secret: 'f1da50c5ea205148bbbc079eb8171aa1a909eed2',
+    },
+});
+gitment.render('gitment_container');
+</script>
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        
+        
+        
+
+
+
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar.gif"
+               alt="Doreen" />
+          <p class="site-author-name" itemprop="name">Doreen</p>
+           
+              <p class="site-description motion-element" itemprop="description">this  is a personal recordings for study & life</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+        
+        
+          <!-- <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div> -->
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              
+              
+              <span class="links-of-author-item">
+                <a href="https://github.com/wadrn" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              
+              
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/dong-rui-ning/activities" target="_blank" title="Zhihu">
+                  
+                    <i class="fa fa-fw fa-zhihu"></i>
+                  
+                  Zhihu
+                </a>
+              </span>
+            
+              
+              
+              <span class="links-of-author-item">
+                <a href="https://juejin.im/user/57ca4e11a0bb9f007f3fa0c9" target="_blank" title="Juejin">
+                  
+                    <i class="fa fa-fw fa-juejin"></i>
+                  
+                  Juejin
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+
+
+
+
+            
+              <div class="post-toc-content">
+    <ol class=nav>
+      <li class="nav-item nav-level-2"> <a class="nav-link" href="#css3-语法"> <span class="nav-number">1</span> <span class="nav-text">CSS3 语法</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-3"> <a class="nav-link" href="#实现阴影框效果"> <span class="nav-number">1.1</span> <span class="nav-text">实现阴影框效果</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#给背景图添加蒙板效果可以用before"> <span class="nav-number">1.2</span> <span class="nav-text">给背景图添加蒙板效果可以用before</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-3"> <a class="nav-link" href="#css变形和动画"> <span class="nav-number">1.3</span> <span class="nav-text">CSS变形和动画</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child">
+    </ol>
+  </div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Doreen</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://jekyllrb.com">Jekyll</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/simpleyyt/jekyll-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+   
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/assets/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/assets/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/assets/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/assets/js/src/post-details.js?v=5.1.1"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/assets/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+    
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
+

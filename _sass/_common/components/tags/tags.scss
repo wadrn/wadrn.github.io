@@ -6,3 +6,26 @@
 @if jekyll-config('exturl') {
   @include exturl;
 }
+
+.tag-cloud-tags{
+  width:400px;
+  height:400px;
+  position: absolute;
+  left:50%;
+  top:70%;
+  margin-left: -200px;
+}
+
+.tag{
+  position: absolute;
+  left:0;
+  top:0;
+  color: #000;
+  display:block;
+  opacity:0;
+  text-decoration: none;
+  font-size: 14px;
+}
+#footer .footer-inner{
+  display:none;
+}

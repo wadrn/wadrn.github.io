@@ -335,6 +335,12 @@ pre .k, pre .kd, pre .kn, pre .kp, pre .kr, pre .kt, pre .javascript .function {
 
 .info h2, .info h3, .info h4, .info h5, .info h6 { color: #5bc0de; }
 
+.tag-cloud-tags { width: 400px; height: 400px; position: absolute; left: 50%; top: 70%; margin-left: -200px; }
+
+.tag { position: absolute; left: 0; top: 0; color: #000; display: block; opacity: 0; text-decoration: none; font-size: 14px; }
+
+#footer .footer-inner { display: none; }
+
 .btn { display: inline-block; padding: 0 20px; font-size: 14px; color: white; background: #222; border: 2px solid #222; text-decoration: none; border-radius: 0; transition-property: background-color; transition-duration: 0.2s; transition-timing-function: ease-in-out; transition-delay: 0s; }
 .btn:hover, .post-button .btn:hover { border-color: #222; color: #222; background: white; }
 
@@ -558,7 +564,7 @@ pre .k, pre .kd, pre .kn, pre .kp, pre .kr, pre .kt, pre .javascript .function {
 .links-of-author { margin-top: 20px; }
 
 .links-of-author a { display: inline-block; vertical-align: middle; margin-right: 10px; margin-bottom: 10px; border-bottom-color: #555; font-size: 13px; }
-.links-of-author a:before { display: inline-block; vertical-align: middle; margin-right: 3px; content: " "; width: 4px; height: 4px; border-radius: 50%; background: #baffff; }
+.links-of-author a:before { display: inline-block; vertical-align: middle; margin-right: 3px; content: " "; width: 4px; height: 4px; border-radius: 50%; background: #fcff00; }
 
 .links-of-blogroll { font-size: 13px; }
 
