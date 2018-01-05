@@ -624,6 +624,7 @@ vendors:
   # Internal path prefix. Please do not edit it.
   _internal: assets/lib
 
+
   # Internal version: 2.1.3
   jquery:
 
@@ -631,6 +632,7 @@ vendors:
   # See: http://fancyapps.com/fancybox/
   fancybox:
   fancybox_css:
+
 
   # Internal version: 1.0.6
   # See: https://github.com/ftlabs/fastclick
@@ -695,7 +697,6 @@ vendors:
   # Internal version: 3.3.0
   # https://github.com/ethantw/Han
   han:
-
 
 # Assets
 css: assets/css
