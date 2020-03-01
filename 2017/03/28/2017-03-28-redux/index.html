@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="redux底层架构实现Redux是一种架构模式 React-redux 就是把 Redux 这种架构模式和 React.js 结合起来的一个库 dispatch 专门负责数据修改,接受一个参数action. action是一个普通的js对象，里面必须包含一个type字段来声明用来做什么操作。 原来模块（组件）修改共享数据是直接改的,这样无法把控。 通过dispatch，所有数据修改必须通过它，并且">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react + redux">
+<meta property="og:url" content="http://yoursite.com/2017/03/28/2017-03-28-redux/index.html">
+<meta property="og:site_name" content="Doreen&#39;s Notes">
+<meta property="og:description" content="redux底层架构实现Redux是一种架构模式 React-redux 就是把 Redux 这种架构模式和 React.js 结合起来的一个库 dispatch 专门负责数据修改,接受一个参数action. action是一个普通的js对象，里面必须包含一个type字段来声明用来做什么操作。 原来模块（组件）修改共享数据是直接改的,这样无法把控。 通过dispatch，所有数据修改必须通过它，并且">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-03-27T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-03-01T12:09:37.509Z">
+<meta property="article:author" content="Doreen">
+<meta property="article:tag" content="FE">
+<meta property="article:tag" content="React">
+<meta property="article:tag" content="redux">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2017/03/28/2017-03-28-redux/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>react + redux | Doreen's Notes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Doreen's Notes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/28/2017-03-28-redux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Doreen">
+      <meta itemprop="description" content="this  is a personal recordings for study & life">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Doreen's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          react + redux
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-03-28 00:00:00" itemprop="dateCreated datePublished" datetime="2017-03-28T00:00:00+08:00">2017-03-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-03-01 20:09:37" itemprop="dateModified" datetime="2020-03-01T20:09:37+08:00">2020-03-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/FE/" itemprop="url" rel="index"><span itemprop="name">FE</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/FE/React/" itemprop="url" rel="index"><span itemprop="name">React</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="redux底层架构实现"><a href="#redux底层架构实现" class="headerlink" title="redux底层架构实现"></a>redux底层架构实现</h1><p>Redux是一种架构模式</p>
+<p>React-redux 就是把 Redux 这种架构模式和 React.js 结合起来的一个库</p>
+<p>dispatch 专门负责数据修改,接受一个参数action.</p>
+<p>action是一个普通的js对象，里面必须包含一个type字段来声明用来做什么操作。</p>
+<p>原来模块（组件）修改共享数据是直接改的,这样无法把控。</p>
+<p>通过dispatch，所有数据修改必须通过它，并且必须用action来声明你的操作，只有它允许才能修改.</p>
+<p>有了如下这种集合：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> appState = &#123;</span><br><span class="line">  title: &#123;</span><br><span class="line">    text: <span class="string">'React.js 小书'</span>,</span><br><span class="line">    color: <span class="string">'red'</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  content: &#123;</span><br><span class="line">    text: <span class="string">'React.js 小书内容'</span>,</span><br><span class="line">    color: <span class="string">'blue'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">dispatch</span> (<span class="params">action</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">switch</span> (action.type) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'UPDATE_TITLE_TEXT'</span>:</span><br><span class="line">      appState.title.text = action.text</span><br><span class="line">      <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">case</span> <span class="string">'UPDATE_TITLE_COLOR'</span>:</span><br><span class="line">      appState.title.color = action.color</span><br><span class="line">      <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">      <span class="keyword">break</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>把它们集中到一个地方，给这个地方起个名字叫做store，然后构建一个函数createStore，用来专门生产这种这种state和dispatch的集合，这样其他App也可以用这种模式了。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createStore</span>(<span class="params">state,stateChanger</span>)</span>&#123;</span><br><span class="line"><span class="keyword">const</span> getState =<span class="function"><span class="params">()</span>=&gt;</span>state;</span><br><span class="line"><span class="keyword">const</span> dispatch =<span class="function">(<span class="params">action</span>)=&gt;</span>stateChanger(state,action);</span><br><span class="line"><span class="keyword">return</span> &#123;getState,dispatch&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p><code>createStore</code>接受两个参数，一个表示应用程序状态，另一个用来描述应用程序会根据<code>action</code>发生什么变化，相当于<code>dispatch</code>函数里面的内容。<br><code>createStore</code>会返回一个对象，这个对象里面包含两个方法<code>getState</code>和<code>dispatch</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> appState = &#123;</span><br><span class="line">  title: &#123;</span><br><span class="line">    text: <span class="string">'React.js 小书'</span>,</span><br><span class="line">    color: <span class="string">'red'</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  content: &#123;</span><br><span class="line">    text: <span class="string">'React.js 小书内容'</span>,</span><br><span class="line">    color: <span class="string">'blue'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">stateChanger</span> (<span class="params">state, action</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">switch</span> (action.type) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'UPDATE_TITLE_TEXT'</span>:</span><br><span class="line">      state.title.text = action.text</span><br><span class="line">      <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">case</span> <span class="string">'UPDATE_TITLE_COLOR'</span>:</span><br><span class="line">      state.title.color = action.color</span><br><span class="line">      <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">      <span class="keyword">break</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> store = createStore(appState, stateChanger)</span><br><span class="line"></span><br><span class="line">renderApp(store.getState()) <span class="comment">// 首次渲染页面</span></span><br><span class="line">store.dispatch(&#123; <span class="attr">type</span>: <span class="string">'UPDATE_TITLE_TEXT'</span>, <span class="attr">text</span>: <span class="string">'《React.js 小书》'</span> &#125;) <span class="comment">// 修改标题文本</span></span><br><span class="line">store.dispatch(&#123; <span class="attr">type</span>: <span class="string">'UPDATE_TITLE_COLOR'</span>, <span class="attr">color</span>: <span class="string">'blue'</span> &#125;) <span class="comment">// 修改标题颜色</span></span><br><span class="line">renderApp(store.getState()) <span class="comment">// 把新的数据渲染到页面上</span></span><br></pre></td></tr></table></figure>
+
+
+<p>针对每个不同的App，我们可以给<code>createStore</code>传入初始数据<code>appState</code> ，和一个描述数据变化的函数<code>stateChanger</code>，然后生成一个<code>store</code>，需要修改数据的时候通过<code>store.dispatch</code>,需要获取数据的时候通过<code>store.getState</code></p>
+<h2 id="监控数据变化"><a href="#监控数据变化" class="headerlink" title="监控数据变化"></a>监控数据变化</h2><p>如上代码，我们每次通过<code>dispatch</code> 修改数据的时候，其实只是数据发生了变化，如果我们不手动调用 <code>renderApp</code>，页面上的内容是不会发生变化的。但是我们总不能每次 <code>dispatch</code>的时候都手动调用一下 <code>renderApp</code>，我们肯定希望数据变化的时候程序能够智能一点地自动重新渲染数据，而不是手动调用。</p>
+<p>你说这好办，往 <code>dispatch</code>里面加<code>renderApp</code>就好了，但是这样<code>createStore</code> 就不够通用了。我们希望用一种通用的方式“监听”数据变化，然后重新渲染页面，这里要用到<strong><em>订阅者模式</em></strong>。修改 createStore：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createStore</span> (<span class="params">state, stateChanger</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> listeners = []</span><br><span class="line">  <span class="keyword">const</span> subscribe = <span class="function">(<span class="params">listener</span>) =&gt;</span> listeners.push(listener)</span><br><span class="line">  <span class="keyword">const</span> getState = <span class="function"><span class="params">()</span> =&gt;</span> state</span><br><span class="line">  <span class="keyword">const</span> dispatch = <span class="function">(<span class="params">action</span>) =&gt;</span> &#123;</span><br><span class="line">    stateChanger(state, action)</span><br><span class="line">    listeners.forEach(<span class="function">(<span class="params">listener</span>) =&gt;</span> listener())</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> &#123; getState, dispatch, subscribe &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>我们在 <code>createStore</code> 里面定义了一个数组 <code>listeners</code>，还有一个新的方法 <code>subscribe</code>，可以通过 <code>store.subscribe(listener)</code> 的方式给 <code>subscribe</code> 传入一个监听函数，这个函数会被 push 到数组当中。</p>
+<p>我们修改了 <code>dispatch</code>，每次当它被调用的时候，除了会调用<code>stateChanger</code> 进行数据的修改，还会遍历 <code>listeners</code> 数组里面的函数，然后一个个地去调用。相当于我们可以通过 <code>subscribe</code> 传入数据变化的监听函数，每当 dispatch 的时候，监听函数就会被调用，这样我们就可以在每当数据变化时候进行重新渲染：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> store = createStore(appState, stateChanger)</span><br><span class="line">store.subscribe(<span class="function"><span class="params">()</span> =&gt;</span> renderApp(store.getState()))</span><br><span class="line"></span><br><span class="line">renderApp(store.getState()) <span class="comment">// 首次渲染页面</span></span><br><span class="line">store.dispatch(&#123; <span class="attr">type</span>: <span class="string">'UPDATE_TITLE_TEXT'</span>, <span class="attr">text</span>: <span class="string">'《React.js 小书》'</span> &#125;) <span class="comment">// 修改标题文本</span></span><br><span class="line">store.dispatch(&#123; <span class="attr">type</span>: <span class="string">'UPDATE_TITLE_COLOR'</span>, <span class="attr">color</span>: <span class="string">'blue'</span> &#125;) <span class="comment">// 修改标题颜色</span></span><br><span class="line"><span class="comment">// ...后面不管如何 store.dispatch，都不需要重新调用 renderApp</span></span><br></pre></td></tr></table></figure>
+
+
+<p>现在我们有了一个比较通用的 <code>createStore</code>，它可以产生一种我们新定义的数据类型 <code>store</code>，通过 <code>store.getState</code> 我们获取共享状态，而且我们约定只能通过 <code>store.dispatch</code> 修改共享状态。<code>store</code> 也允许我们通过 <code>store.subscribe</code>监听数据数据状态被修改了，并且进行后续的例如重新渲染页面的操作。<br>我们接下来会继续优化我们的 <code>createStore</code>的模式，让它使我们的应用程序获得更好的性能。</p>
+<h2 id="共享结构的对象"><a href="#共享结构的对象" class="headerlink" title="共享结构的对象"></a>共享结构的对象</h2><p>ES6中有这样的语法；</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj =&#123;<span class="attr">a</span>:<span class="number">1</span>,<span class="attr">b</span>:<span class="number">2</span>&#125;</span><br><span class="line"><span class="keyword">const</span> obj2 = &#123;...obj&#125; <span class="comment">//=&gt;&#123;a:1,b:2&#125;</span></span><br></pre></td></tr></table></figure>
+
+
+<p><code>const obj2 = { ...obj }</code>其实就是新建一个对象 <code>obj2</code>，然后把<code>obj</code>所有的属性都复制到 <code>obj2</code> 里面，相当于对象的浅复制。上面的 <code>obj</code> 里面的内容和 <code>obj2</code>是完全一样的，但是却是两个<strong>不同的</strong>对象。除了浅复制对象，还可以覆盖、拓展对象属性：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123; <span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span>&#125;</span><br><span class="line"><span class="keyword">const</span> obj2 = &#123; ...obj, <span class="attr">b</span>: <span class="number">3</span>, <span class="attr">c</span>: <span class="number">4</span>&#125; <span class="comment">// =&gt; &#123; a: 1, b: 3, c: 4 &#125;，覆盖了 b，新增了 c</span></span><br></pre></td></tr></table></figure>
+
+
+<p>我们可以把这种特性应用在<code>state</code> 的更新上，我们禁止直接修改原来的对象，一旦你要修改某些东西，你就得把修改路径上的所有对象复制一遍，例如，我们不写下面的修改代码：<br><code>appState.title.text = &#39;react&#39;</code><br>而是新建一个<code>appState</code>，新建<code>appState.title</code>，新建<code>appState.title.text</code>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> newAppState =&#123;<span class="comment">//新建一个newAppState</span></span><br><span class="line">...appState,<span class="comment">//复制appState里面的内容</span></span><br><span class="line">title:&#123; <span class="comment">// 用一个新的对象覆盖原来的 title 属性</span></span><br><span class="line">  ...appState.title,<span class="comment">// 复制原来 title 对象里面的内容</span></span><br><span class="line">  text:<span class="string">'react'</span><span class="comment">// 覆盖 text 属性</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p><code>appState</code> 和 <code>newAppState</code> 其实是两个不同的对象，因为对象浅复制的缘故，其实它们里面的属性 <code>content</code>指向的是同一个对象；但是因为 <code>title</code>被一个新的对象覆盖了，所以它们的 <code>title</code>属性是不同的。<br>我们每次修改某些数据的时候，都不会碰原来的数据，而是把需要修改数据路径上的对象都 copy 一个出来。这样有什么好处？看看我们的目的达到了：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">appState !== newAppState <span class="comment">// true，数据变化了，重新渲染</span></span><br><span class="line">appState.title !== newAppState.title <span class="comment">// true，数据变化了，重新渲染</span></span><br><span class="line">appState.content !== appState.content <span class="comment">// false，数据没有变化，不需要重新渲染</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="优化性能"><a href="#优化性能" class="headerlink" title="优化性能"></a>优化性能</h2><p>修改<code>stateChanger</code>，让它修改数据的时候，并不会直接修改原来的数据 <code>state</code>，而是产生上述的共享结构的对象：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">stateChanger</span> (<span class="params">state, action</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">switch</span> (action.type) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'UPDATE_TITLE_TEXT'</span>:</span><br><span class="line">      <span class="keyword">return</span> &#123; <span class="comment">// 构建新的对象并且返回</span></span><br><span class="line">        ...state,</span><br><span class="line">        title: &#123;</span><br><span class="line">          ...state.title,</span><br><span class="line">          text: action.text</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'UPDATE_TITLE_COLOR'</span>:</span><br><span class="line">      <span class="keyword">return</span> &#123; <span class="comment">// 构建新的对象并且返回</span></span><br><span class="line">        ...state,</span><br><span class="line">        title: &#123;</span><br><span class="line">          ...state.title,</span><br><span class="line">          color: action.color</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">      <span class="keyword">return</span> state <span class="comment">// 没有修改，返回原来的对象</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>每次需要修改的时候都会产生新的对象，并且返回。而如果没有修改（在 default 语句中）则返回原来的 state 对象。</p>
+<p>因为<code>stateChanger</code> 不会修改原来对象了，而是返回对象，所以我们需要修改一下 <code>createStore</code>。让它用每次 <code>stateChanger(state, action)</code>的调用结果覆盖原来的 state：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createStore</span> (<span class="params">state, stateChanger</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> listeners = []</span><br><span class="line">  <span class="keyword">const</span> subscribe = <span class="function">(<span class="params">listener</span>) =&gt;</span> listeners.push(listener)</span><br><span class="line">  <span class="keyword">const</span> getState = <span class="function"><span class="params">()</span> =&gt;</span> state</span><br><span class="line">  <span class="keyword">const</span> dispatch = <span class="function">(<span class="params">action</span>) =&gt;</span> &#123;</span><br><span class="line">    state = stateChanger(state, action) <span class="comment">// 覆盖原对象</span></span><br><span class="line">    listeners.forEach(<span class="function">(<span class="params">listener</span>) =&gt;</span> listener())</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> &#123; getState, dispatch, subscribe &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>再优化一下，其实<code>appState</code>和 <code>stateChanger</code> 可以合并到一起去：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">stateChanger</span> (<span class="params">state, action</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!state) &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      title: &#123;</span><br><span class="line">        text: <span class="string">'React.js 小书'</span>,</span><br><span class="line">        color: <span class="string">'red'</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">      content: &#123;</span><br><span class="line">        text: <span class="string">'React.js 小书内容'</span>,</span><br><span class="line">        color: <span class="string">'blue'</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">switch</span> (action.type) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'UPDATE_TITLE_TEXT'</span>:</span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">        ...state,</span><br><span class="line">        title: &#123;</span><br><span class="line">          ...state.title,</span><br><span class="line">          text: action.text</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'UPDATE_TITLE_COLOR'</span>:</span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">        ...state,</span><br><span class="line">        title: &#123;</span><br><span class="line">          ...state.title,</span><br><span class="line">          color: action.color</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">      <span class="keyword">return</span> state</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>stateChanger</code> 现在既充当了获取初始化数据的功能，也充当了生成更新数据的功能。如果有传入 <code>state</code> 就生成更新数据，否则就是初始化数据。这样我们可以优化 <code>createStore</code>成一个参数，因为 <code>state</code> 和<code>stateChanger</code> 合并到一起了：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createStore</span> (<span class="params">stateChanger</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> state = <span class="literal">null</span></span><br><span class="line">  <span class="keyword">const</span> listeners = []</span><br><span class="line">  <span class="keyword">const</span> subscribe = <span class="function">(<span class="params">listener</span>) =&gt;</span> listeners.push(listener)</span><br><span class="line">  <span class="keyword">const</span> getState = <span class="function"><span class="params">()</span> =&gt;</span> state</span><br><span class="line">  <span class="keyword">const</span> dispatch = <span class="function">(<span class="params">action</span>) =&gt;</span> &#123;</span><br><span class="line">    state = stateChanger(state, action)</span><br><span class="line">    listeners.forEach(<span class="function">(<span class="params">listener</span>) =&gt;</span> listener())</span><br><span class="line">  &#125;</span><br><span class="line">  dispatch(&#123;&#125;) <span class="comment">// 初始化 state</span></span><br><span class="line">  <span class="keyword">return</span> &#123; getState, dispatch, subscribe &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>我们给 stateChanger 这个玩意起一个通用的名字：<code>reducer</code></p>
+<h2 id="reducer"><a href="#reducer" class="headerlink" title="reducer"></a>reducer</h2><p><code>createStore</code>接受一个叫 <code>reducer</code> 的函数作为参数，这个函数规定是一个纯函数，它接受两个参数，一个是 <code>state</code>，一个是 <code>action</code>。</p>
+<p>如果没有传入<code>state</code>或者 <code>state</code>是 null，那么它就会返回一个初始化的数据。如果有传入 <code>state</code> 的话，就会根据 <code>action</code> 来“修改“数据，但其实它没有、也规定不能修改 state，而是要通过上节所说的把修改路径的对象都复制一遍，然后产生一个新的对象返回。如果它不能识别你的 <code>action</code>，它就不会产生新的数据，而是（在 default 内部）把 <code>state</code> 原封不动地返回。</p>
+<p><code>reducer</code> 是不允许有副作用的。你不能在里面操作 DOM，也不能发 Ajax 请求，更不能直接修改<code>state</code>，它要做的仅仅是 —— <strong>初始化和计算新的<code>state</code></strong>。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><code>createStore</code>现在可以直接拿来用了，套路就是：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定一个 reducer</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">reducer</span> (<span class="params">state, action</span>) </span>&#123;</span><br><span class="line">  <span class="comment">/* 初始化 state 和 switch case */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 生成 store</span></span><br><span class="line"><span class="keyword">const</span> store = createStore(reducer)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 监听数据变化重新渲染页面</span></span><br><span class="line">store.subscribe(<span class="function"><span class="params">()</span> =&gt;</span> renderApp(store.getState()))</span><br><span class="line"></span><br><span class="line"><span class="comment">// 首次渲染页面</span></span><br><span class="line">renderApp(store.getState()) </span><br><span class="line"></span><br><span class="line"><span class="comment">// 后面可以随意 dispatch 了，页面自动更新</span></span><br><span class="line">store.dispatch(...)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>现在的代码跟 React.js 一点关系都没有，接下来我们要把 React.js 和 Redux 结合起来，用 Redux 模式帮助管理 React.js 的应用状态。</p>
+<h2 id="react-redux"><a href="#react-redux" class="headerlink" title="react-redux"></a>react-redux</h2><p>前端中应用的状态存在的问题：一个状态可能被多个组件依赖或者影响，而 React.js 并没有提供好的解决方案，我们只能把状态提升到依赖或者影响这个状态的所有组件的公共父组件上，我们把这种行为叫做状态提升。但是需求不停变化，共享状态没完没了地提升也不是办法。<br>后来我们在 React.js 的 context 中提出，我们可用把共享状态放到父组件的 context 上，这个父组件下所有的组件都可以从 context 中直接获取到状态而不需要一层层地进行传递了。但是直接从 context 里面存放、获取数据增强了组件的耦合性；并且所有组件都可以修改 context 里面的状态就像谁都可以修改共享状态一样，导致程序运行的不可预料。</p>
+<p>既然这样，为什么不把 context 和 store 结合起来？毕竟 store 的数据不是谁都能修改，而是约定只能通过 dispatch 来进行修改，这样的话每个组件既可以去 context 里面获取 store 从而获取状态，又不用担心它们乱改数据了。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/FE/" rel="tag"># FE</a>
+              <a href="/tags/React/" rel="tag"># React</a>
+              <a href="/tags/redux/" rel="tag"># redux</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/03/16/2017-03-16-React/" rel="prev" title="React分析">
+      <i class="fa fa-chevron-left"></i> React分析
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/04/05/2017-04-05-serverside%20or%20brower/" rel="next" title="服务器渲染与浏览器渲染">
+      服务器渲染与浏览器渲染 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#redux底层架构实现"><span class="nav-number">1.</span> <span class="nav-text">redux底层架构实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#监控数据变化"><span class="nav-number">1.1.</span> <span class="nav-text">监控数据变化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#共享结构的对象"><span class="nav-number">1.2.</span> <span class="nav-text">共享结构的对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化性能"><span class="nav-number">1.3.</span> <span class="nav-text">优化性能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reducer"><span class="nav-number">1.4.</span> <span class="nav-text">reducer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#react-redux"><span class="nav-number">1.6.</span> <span class="nav-text">react-redux</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Doreen</p>
+  <div class="site-description" itemprop="description">this  is a personal recordings for study & life</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Doreen</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="https://cdn.jsdelivr.net/npm/live2d-widget@^3.1.3/lib/L2Dwidget.min.js"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/assets/hijiki.model.json"},"display":{"superSample":2,"width":165,"height":155,"position":"right","vOffset":-20},"mobile":{"show":false,"scale":0.05},"react":{"opacityDefault":1,"opacityOnHover":0.2},"log":false});</script></body>
+</html>
