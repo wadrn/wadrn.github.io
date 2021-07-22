@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="JS设计模式什么是模式模式是一种可复用的解决方案 优点 已验证的解决方案 模式容易被复用 模式富有表达力  模式状态测试、Proto模式及三法则成为有效模式适合性、实用性、适用性。 设计模式的结构一种模式最初是以一种规则的形式呈现的，该规则建立下面这样的关系  上下文 上下文里产生的元件系统 解决元件在上下文中自身问题的配置  设计模式类别 创建型设计模式专注于处理对象创建机制，以适合给定情况的方">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS设计模式">
+<meta property="og:url" content="http://yoursite.com/2017/04/21/2017-04-21-JS%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/index.html">
+<meta property="og:site_name" content="Doreen&#39;s Notes">
+<meta property="og:description" content="JS设计模式什么是模式模式是一种可复用的解决方案 优点 已验证的解决方案 模式容易被复用 模式富有表达力  模式状态测试、Proto模式及三法则成为有效模式适合性、实用性、适用性。 设计模式的结构一种模式最初是以一种规则的形式呈现的，该规则建立下面这样的关系  上下文 上下文里产生的元件系统 解决元件在上下文中自身问题的配置  设计模式类别 创建型设计模式专注于处理对象创建机制，以适合给定情况的方">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/Users/dongruining/Downloads/mediator.png">
+<meta property="article:published_time" content="2017-04-20T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-03-01T12:09:37.512Z">
+<meta property="article:author" content="Doreen">
+<meta property="article:tag" content="FE">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/Users/dongruining/Downloads/mediator.png">
+
+<link rel="canonical" href="http://yoursite.com/2017/04/21/2017-04-21-JS%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>JS设计模式 | Doreen's Notes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Doreen's Notes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/21/2017-04-21-JS%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Doreen">
+      <meta itemprop="description" content="this  is a personal recordings for study & life">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Doreen's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JS设计模式
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-04-21 00:00:00" itemprop="dateCreated datePublished" datetime="2017-04-21T00:00:00+08:00">2017-04-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-03-01 20:09:37" itemprop="dateModified" datetime="2020-03-01T20:09:37+08:00">2020-03-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/FE/" itemprop="url" rel="index"><span itemprop="name">FE</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/FE/design-pattern/" itemprop="url" rel="index"><span itemprop="name">design pattern</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="JS设计模式"><a href="#JS设计模式" class="headerlink" title="JS设计模式"></a>JS设计模式</h1><h2 id="什么是模式"><a href="#什么是模式" class="headerlink" title="什么是模式"></a>什么是模式</h2><p>模式是一种可复用的解决方案</p>
+<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><ol>
+<li>已验证的解决方案</li>
+<li>模式容易被复用</li>
+<li>模式富有表达力</li>
+</ol>
+<h2 id="模式状态测试、Proto模式及三法则"><a href="#模式状态测试、Proto模式及三法则" class="headerlink" title="模式状态测试、Proto模式及三法则"></a>模式状态测试、Proto模式及三法则</h2><p>成为有效模式<br>适合性、实用性、适用性。</p>
+<h2 id="设计模式的结构"><a href="#设计模式的结构" class="headerlink" title="设计模式的结构"></a>设计模式的结构</h2><p>一种模式最初是以一种规则的形式呈现的，该规则建立下面这样的关系</p>
+<ul>
+<li>上下文</li>
+<li>上下文里产生的元件系统</li>
+<li>解决元件在上下文中自身问题的配置</li>
+</ul>
+<h2 id="设计模式类别"><a href="#设计模式类别" class="headerlink" title="设计模式类别"></a>设计模式类别</h2><ol>
+<li>创建型设计模式<br>专注于处理对象创建机制，以适合给定情况的方式来创建对象。<br>包括：Constructor(构造器)、Factory(工厂)、Abstract(抽象)、Prototype(原型)、Singleton(单例)和Builder(生成器)</li>
+<li>结构型设计模式<br>结构型设计模式与对象组合有关，通常可以用于找出在不同对象之间建立关系的简单方法。<br>这种模式有助于确保系统某一部分发生变化时，系统整个结构不需要同时改变。<br>包括：Decorator(装饰者)、Facade(外观)、Flyweight(享元)、Adapter(适配器)、Proxy(代理)</li>
+<li>行为设计模式<br>专注于改善或简化系统中不同对象之间的通信<br>包括：Iterator(迭代器)、Mediator(中介者)、Observer(观察者)、Visitor(访问者)</li>
+</ol>
+<h2 id="js设计模式"><a href="#js设计模式" class="headerlink" title="js设计模式"></a>js设计模式</h2><h3 id="Constructor模式"><a href="#Constructor模式" class="headerlink" title="Constructor模式"></a>Constructor模式</h3><h4 id="对象创建"><a href="#对象创建" class="headerlink" title="对象创建"></a>对象创建</h4><ol>
+<li>’.‘语法</li>
+<li>中括号语法</li>
+<li>Object.defineProperty</li>
+</ol>
+<h4 id="基本Constructor"><a href="#基本Constructor" class="headerlink" title="基本Constructor"></a>基本Constructor</h4><h4 id="带原型的Constructor"><a href="#带原型的Constructor" class="headerlink" title="带原型的Constructor"></a>带原型的Constructor</h4><p>such as :<br>Car.prototype.functionName = function(){}</p>
+<h3 id="Module模式"><a href="#Module模式" class="headerlink" title="Module模式"></a>Module模式</h3><p>js中有几种用于实现模块的方法：</p>
+<ul>
+<li>对象字面量表示法</li>
+<li>Module模式</li>
+<li>AMD模块</li>
+<li>CommonJS</li>
+<li>ECMAScript Harmony 模块</li>
+</ul>
+<h4 id="对象字面量"><a href="#对象字面量" class="headerlink" title="对象字面量"></a>对象字面量</h4><h4 id="Module模式-1"><a href="#Module模式-1" class="headerlink" title="Module模式"></a>Module模式</h4><h5 id="私有"><a href="#私有" class="headerlink" title="私有"></a>私有</h5><p>Module模式使用闭包封装’私有‘状态和组织。提供了一种包装混合公有/私有方法和变量的方式，防止其泄露至全局作用域。<br>在Module模式内，由于闭包的存在，声明的变量和方法只在该模式内部可用。但在返回对象上定义的变量和方法，则对外部使用者都是可用的。<br><strong>Module模式模板</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myNamespace =(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">//私有计数器变量</span></span><br><span class="line">    <span class="keyword">var</span> myPrivateVar = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">var</span> myPrivateMethod = <span class="function"><span class="keyword">function</span>(<span class="params">foo</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(foo);</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        myPublicVar :<span class="string">'foo'</span>,</span><br><span class="line">        myPublicFunction:<span class="function"><span class="keyword">function</span>(<span class="params">bar</span>)</span>&#123;</span><br><span class="line">            myPrivateVar++;</span><br><span class="line">            myPrivateMethod(bar);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+
+<h3 id="Module模块变化"><a href="#Module模块变化" class="headerlink" title="Module模块变化"></a>Module模块变化</h3><h4 id="引入混入"><a href="#引入混入" class="headerlink" title="引入混入"></a>引入混入</h4><p>全局变量可以作为参数传递给模块的匿名函数</p>
+<h4 id="引出"><a href="#引出" class="headerlink" title="引出"></a>引出</h4><h4 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h4><h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><p>访问公有和私有成员的方式不同，想改变可见性时必须要修改每一个用过该成员的地方。</p>
+<p>###Singleton单例模式</p>
+<p>限制了类的实例化次数只能一次<br>在该实例不存在的情况下，可以通过一个方法创建一个类来实现创建类的新实例；如果实例已经存在，它会简单返回该对象该对象的引用。<br>在js中，Singleton充当共享资源命名空间，从全局命名空间中隔离出代码实现，从而为函数提供单一访问点。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> mySingleton =(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">//实例保持了singleton的一个引用</span></span><br><span class="line">    <span class="keyword">var</span> instance;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">init</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">privateMethod</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'I am private'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> privateVar = <span class="string">'I am also private'</span>;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            publicMethod:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">"the public can see me"</span>);</span><br><span class="line">            &#125;,</span><br><span class="line">            publicProperty:<span class="string">"I am also public"</span></span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">return</span>&#123;</span><br><span class="line">        getInstance:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(!instance)&#123;</span><br><span class="line">                instance = init();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> instance;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+<p>Singleton模式适用性的描述如下：</p>
+<ul>
+<li>当类只能有一个实例而且客户可以从一个众所周知的访问点访问</li>
+<li>该类的唯一实例应该是通过子类化可扩展的，并且客户应该无需更改代码就能使用一个扩展的实例时。</li>
+</ul>
+<h3 id="Observer观察者模式"><a href="#Observer观察者模式" class="headerlink" title="Observer观察者模式"></a>Observer观察者模式</h3><blockquote>
+<p>一个或多个观察者对目标的状态感兴趣，它们通过将自己依附在目标对象上以便注册所感兴趣的内容。目标状态发生改变并且观察者可能对这些改变感兴趣，就会发送一个通知消息，调用每个观察者的更新方法。当观察者不再对目标状态感兴趣，他们可以简单地将自己从中分离。</p>
+</blockquote>
+<h4 id="Observer模式和Publish-Subscribe模式的区别"><a href="#Observer模式和Publish-Subscribe模式的区别" class="headerlink" title="Observer模式和Publish/Subscribe模式的区别"></a>Observer模式和Publish/Subscribe模式的区别</h4><h4 id="Observer优点"><a href="#Observer优点" class="headerlink" title="Observer优点"></a>Observer优点</h4><p>是用于设计<strong>解耦</strong>性系统的最佳工具之一</p>
+<h4 id="Publish-Subscribe实现"><a href="#Publish-Subscribe实现" class="headerlink" title="Publish/Subscribe实现"></a>Publish/Subscribe实现</h4><p>ECMAScript实现是由事件驱动的</p>
+<h4 id="Publish-Subscribe实现-1"><a href="#Publish-Subscribe实现-1" class="headerlink" title="Publish/Subscribe实现"></a>Publish/Subscribe实现</h4><p>####（例子1）用户界面通知<br>一个负责显示实时股票信息的Web应用程序<br>一个显示股票统计的网格和一个显示最后更新点计数器，当数据模型改变时，应用程序需要更新网格和计数器。<br><strong>目标</strong>：数据模型<br><strong>观察者</strong>：网格和计数器</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">div.onclick = <span class="function"><span class="keyword">function</span> <span class="title">click</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    alert(<span class="string">'click'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>只要订阅了div的click事件，当点击div的时候，function click就会被触发。</p>
+<h3 id="Mediator-中介者-模式"><a href="#Mediator-中介者-模式" class="headerlink" title="Mediator(中介者)模式"></a>Mediator(中介者)模式</h3><p>行为设计模式<br>通过一个中介者来连接两个对象的模式,封装对象之间的交互</p>
+<p><img src="/Users/dongruining/Downloads/mediator.png" alt=""><br>MVC模式中的Controller起到了中介者的作用，</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Participant = <span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">    <span class="keyword">this</span>.chatroom = <span class="literal">null</span>;</span><br><span class="line">&#125;;</span><br><span class="line">Participant.prototype = &#123;</span><br><span class="line">    send: <span class="function"><span class="keyword">function</span>(<span class="params">message, to</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.chatroom.send(message, <span class="keyword">this</span>, to);</span><br><span class="line">    &#125;,</span><br><span class="line">    receive: <span class="function"><span class="keyword">function</span>(<span class="params">message, from</span>) </span>&#123;</span><br><span class="line">        log.add(<span class="keyword">from</span>.name + <span class="string">" to "</span> + <span class="keyword">this</span>.name + <span class="string">": "</span> + message);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> Chatroom = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> participants = &#123;&#125;;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        register: <span class="function"><span class="keyword">function</span>(<span class="params">participant</span>) </span>&#123;</span><br><span class="line">            participants[participant.name] = participant;</span><br><span class="line">            participant.chatroom = <span class="keyword">this</span>;</span><br><span class="line">        &#125;,</span><br><span class="line">        send: <span class="function"><span class="keyword">function</span>(<span class="params">message, from, to</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (to) &#123;                   </span><br><span class="line">                to.receive(message, <span class="keyword">from</span>);    </span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;                     </span><br><span class="line">                <span class="keyword">for</span> (key <span class="keyword">in</span> participants) &#123;   </span><br><span class="line">                    <span class="keyword">if</span> (participants[key] !== <span class="keyword">from</span>) &#123;</span><br><span class="line">                        participants[key].receive(message, <span class="keyword">from</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> log = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> log = <span class="string">""</span>;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        add: <span class="function"><span class="keyword">function</span>(<span class="params">msg</span>) </span>&#123; log += msg + <span class="string">"\n"</span>; &#125;,</span><br><span class="line">        show: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; alert(log); log = <span class="string">""</span>; &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)();</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">run</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> yoko = <span class="keyword">new</span> Participant(<span class="string">"Yoko"</span>);</span><br><span class="line">    <span class="keyword">var</span> john = <span class="keyword">new</span> Participant(<span class="string">"John"</span>);</span><br><span class="line">    <span class="keyword">var</span> paul = <span class="keyword">new</span> Participant(<span class="string">"Paul"</span>);</span><br><span class="line">    <span class="keyword">var</span> ringo = <span class="keyword">new</span> Participant(<span class="string">"Ringo"</span>);</span><br><span class="line">    <span class="keyword">var</span> chatroom = <span class="keyword">new</span> Chatroom();</span><br><span class="line">    chatroom.register(yoko);</span><br><span class="line">    chatroom.register(john);</span><br><span class="line">    chatroom.register(paul);</span><br><span class="line">    chatroom.register(ringo);</span><br><span class="line">    yoko.send(<span class="string">"All you need is love."</span>);</span><br><span class="line">    yoko.send(<span class="string">"I love you John."</span>);</span><br><span class="line">    john.send(<span class="string">"Hey, no need to broadcast"</span>, yoko);</span><br><span class="line">    paul.send(<span class="string">"Ha, I heard that!"</span>);</span><br><span class="line">    ringo.send(<span class="string">"Paul, what do you think?"</span>, paul);</span><br><span class="line">    log.show();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>聊天室起到了中介者的作用。</p>
+<h3 id="Prototype（原型）模式"><a href="#Prototype（原型）模式" class="headerlink" title="Prototype（原型）模式"></a>Prototype（原型）模式</h3><h3 id="Command（命令）模式"><a href="#Command（命令）模式" class="headerlink" title="Command（命令）模式"></a>Command（命令）模式</h3><p>此模式旨在将方法调用、请求或操作封装到单一对象中，从而根据我们不同的请求对客户进行参数化和传递可供执行的方法调用。<br>将调用操作的对象与知道如何实现该操作的对象解耦，并在交换出具体类方面提供更大的整体灵活性。</p>
+<h3 id="Facade（外观）模式"><a href="#Facade（外观）模式" class="headerlink" title="Facade（外观）模式"></a>Facade（外观）模式</h3><p>外观模式提供一个高层接口，这个接口使得客户端或子系统更加方便调用。<br>可以对用户隐藏真正的细节，用户只关心最高层的接口。<br>例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> stopEvent = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">    e.stopPropagation();</span><br><span class="line">    e.preventDefault();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Factory工厂模式"><a href="#Factory工厂模式" class="headerlink" title="Factory工厂模式"></a>Factory工厂模式</h3><p>创建型模式，不显式地要求使用一个构造函数。简单工厂模式是由一个方法来决定到底要创建哪个类的实例，而这些实例经常都拥有相同的接口，这种模式主要用在所实例化的类型在编译期并不能确定，而是在执行期决定的情况。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createObject</span>(<span class="params">name,age,profession</span>)</span>&#123;<span class="comment">//集中实例化的函数</span></span><br><span class="line">        <span class="keyword">var</span> obj = <span class="keyword">new</span> <span class="built_in">Object</span>();</span><br><span class="line">        obj.name = name;</span><br><span class="line">        obj.age = age;</span><br><span class="line">        obj.profession = profession;</span><br><span class="line">        obj.move = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.name + <span class="string">' at '</span> + <span class="keyword">this</span>.age + <span class="string">' engaged in '</span> + <span class="keyword">this</span>.profession;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">return</span> obj;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> test1 = createObject(<span class="string">'trigkit4'</span>,<span class="number">22</span>,<span class="string">'programmer'</span>);<span class="comment">//第一个实例</span></span><br><span class="line">    <span class="keyword">var</span> test2 = createObject(<span class="string">'mike'</span>,<span class="number">25</span>,<span class="string">'engineer'</span>);<span class="comment">//第二个实例</span></span><br></pre></td></tr></table></figure>
+
+<p>工厂模式分为 简单工厂、抽象工厂、智能工厂<br>Factory模式主要在以下场景使用：</p>
+<ul>
+<li>当对象或组件设计高复杂性时</li>
+<li>当需要根据所在的不同环境轻松生成对象的不同实例时</li>
+<li>当处理很多共享相同属性的小型对象或组件时</li>
+</ul>
+<h3 id="装饰者模式"><a href="#装饰者模式" class="headerlink" title="装饰者模式"></a>装饰者模式</h3><p>装饰者模式用于<strong>运行时动态为对象附加功能</strong>。<br>主要解决的问题是：将对象与可扩充的简单基本单元分离出来，按需增强该对象。<br>通过两种方式：<br>继承<br>装饰列表</p>
+<h3 id="Flyweight-享元-模式"><a href="#Flyweight-享元-模式" class="headerlink" title="Flyweight(享元)模式"></a>Flyweight(享元)模式</h3><p>结构型解决方案，用于优化重复、缓慢及数据共享效率低的代码。旨在通过与相关的对象共享尽可能多的数据来减少应用程序中内存的使用。<br>两种方式：<br>第一种用于数据层，处理内存中保存的大量数据<br>第二种用于DOM层，Flyweight可以用作中央事件管理器，避免将事件处理程序附加到父节点的每个子节点上。<br>例如：图书馆书籍管理</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//书籍内部状态</span></span><br><span class="line"><span class="keyword">var</span> Book = <span class="function"><span class="keyword">function</span>(<span class="params">title,author,pageCount,publisherID,ISBN</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.title =title;</span><br><span class="line">    <span class="keyword">this</span>.author=author;</span><br><span class="line">    <span class="keyword">this</span>.pageCount = pageCount;</span><br><span class="line">    <span class="keyword">this</span>.publisherID = publisherID;</span><br><span class="line">    <span class="keyword">this</span>.ISBN=ISBN;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//基本工厂</span></span><br><span class="line"><span class="keyword">var</span> BookFactory = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> existingBooks=&#123;&#125;,existingBook;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        createBook:<span class="function"><span class="keyword">function</span>(<span class="params">title,author,pageCount,publisherID,ISBN</span>)</span>&#123;</span><br><span class="line">            existingBook = existingBooks[ISBN];</span><br><span class="line">            <span class="keyword">if</span>(!!existingBook)&#123;</span><br><span class="line">                <span class="keyword">return</span> existingBook;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">var</span> book = <span class="keyword">new</span> Book(title,author,pageCount,publisherID,IISBN);</span><br><span class="line">                existingBooks[ISBN] = book;</span><br><span class="line">                <span class="keyword">return</span> book;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">//管理外部状态</span></span><br><span class="line"><span class="comment">//书籍记录管理器单例</span></span><br><span class="line"><span class="keyword">var</span> BookRecordManager = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> bookRecordDatabase =&#123;&#125;;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="comment">//添加新书到图书馆系统</span></span><br><span class="line">        addBookRecord :<span class="function"><span class="keyword">function</span>(<span class="params">id,title,author,pageCount,publisherID,ISBN,checkoutDate,checkoutMember,dueReturnDate,availability</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">var</span> book = BookFactory.createBook(title,author,pageCount,publisherID,ISBN);</span><br><span class="line">            bookRecordDatabase[id] =&#123;</span><br><span class="line">                checkoutMember:checkoutMember,</span><br><span class="line">                checkoutDate:checkoutDate,</span><br><span class="line">                dueReturnDate:dueReturnDate,</span><br><span class="line">                availability:availability,</span><br><span class="line">                book:book</span><br><span class="line">            &#125;;</span><br><span class="line">        &#125;,</span><br><span class="line">        updateCheckoutStatus :<span class="function"><span class="keyword">function</span>(<span class="params">bookID,newStatus,checkoutDate,checkoutMember,newReturnDate</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">var</span> record = bookRecordDatabase[bookID];</span><br><span class="line">            record.availability = newStatus;</span><br><span class="line">            record.checkoutDate = checkoutDate;</span><br><span class="line">            record.checkoutMember = checkoutMember;</span><br><span class="line">            record.dueReturnDate = newReturnDate;</span><br><span class="line">        &#125;,</span><br><span class="line">        extendCheckoutPeriod :<span class="function"><span class="keyword">function</span>(<span class="params">bookID,newReturnDate</span>)</span>&#123;</span><br><span class="line">            bookRecordDatabase[bookID].dueReturnDate = newReturnDate;</span><br><span class="line">        &#125;,</span><br><span class="line">        isPastDue:<span class="function"><span class="keyword">function</span>(<span class="params">bookID</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">var</span> currentDate = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">            <span class="keyword">return</span> currentDate.getTime() &gt; <span class="built_in">Date</span>.parse(bookRecordDatabase[bookID].dueReturnDate)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>jQuery中，用户将初始化点击绑定到一个容器div的同时，使用了一个stateManager命名空间来封装我们的享元逻辑。</p>
+<p>HTML</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"toggle"</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span></span><br><span class="line">        More Info (Address)</span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"info"</span>&gt;</span></span><br><span class="line">            This is more information</span><br><span class="line">        <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"toggle"</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span></span><br><span class="line">        Even More Info (Map)</span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"info"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">iframe</span> <span class="attr">src</span>=<span class="string">"http://www.baidu.com"</span>&gt;</span><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>JS</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> stateManager =&#123;</span><br><span class="line">    fly: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> self = <span class="keyword">this</span>;</span><br><span class="line">        $(<span class="string">"#container"</span>).unbind().on(<span class="string">"click"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">var</span> target = $(e.originalTarget || e.srcElement);</span><br><span class="line">            <span class="keyword">if</span>(target.is(<span class="string">"div.toggle"</span>))&#123;</span><br><span class="line">                self.handleClick(target);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;,</span><br><span class="line">    handleClick:<span class="function"><span class="keyword">function</span>(<span class="params">elem</span>)</span>&#123;</span><br><span class="line">        elem.find(<span class="string">"span"</span>).toggle(<span class="string">"slow"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="MV-模式"><a href="#MV-模式" class="headerlink" title="MV*模式"></a>MV*模式</h3><h4 id="MVC模式"><a href="#MVC模式" class="headerlink" title="MVC模式"></a>MVC模式</h4><p>View（视图）是应用程序数据的可视化表示</p>
+<h4 id="MVP模式"><a href="#MVP模式" class="headerlink" title="MVP模式"></a>MVP模式</h4><p>模型-视图-表示器<br>Model-View-Presenter<br>由View进行请求，表示器执行任何与用户请求有关的工作，并将数据回传给它们。</p>
+<h4 id="MVVM模式"><a href="#MVVM模式" class="headerlink" title="MVVM模式"></a>MVVM模式</h4><p>模型-视图-视图模型<br>视图是主动视图，有数据绑定<br><strong>Model</strong>:应用程序将会使用的特定领域数据信息<br><strong>View</strong>:与用户进行交互的应用程序的一部分<br><strong>ViewModel</strong>:一个专门的Controller，充当数据转换器。<br>将Model信息转变为View信息，将命令从View传递到Model。<br>是一个用于保存用户正在使用且尚未保存数据的层<br>View 和 ViewModel之间通过数据绑定和事件进行通信。<br>Model和ViewModel上的属性通过双向数据绑定进行同步和更新。</p>
+<h3 id="jquery中的设计模式"><a href="#jquery中的设计模式" class="headerlink" title="jquery中的设计模式"></a>jquery中的设计模式</h3><h3 id="Composite组合模式"><a href="#Composite组合模式" class="headerlink" title="Composite组合模式"></a>Composite组合模式</h3><p>部分整体模式,将所有对象组合成<em>树形结构</em>，使用户只需要操作最上层接口，就可以对所有成员做相同操作。</p>
+<h3 id="Adapter适配器模式"><a href="#Adapter适配器模式" class="headerlink" title="Adapter适配器模式"></a>Adapter适配器模式</h3><p><em>Adapter模式</em>将对象或类的接口interface，转变为与特定的系统兼容的接口。<br>适配器模式经常用来适配两个接口，比如调用的js库中有一个根据id获取节点的方法$id(),但是jquery里的$()也可以根据id获取节点，可以用一个适配器来修改：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$id = <span class="function"><span class="keyword">function</span>(<span class="params">id</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> jQuery(<span class="string">"#"</span>+id)[<span class="number">0</span>];</span><br></pre></td></tr></table></figure>
+<h3 id="Facade外观模式"><a href="#Facade外观模式" class="headerlink" title="Facade外观模式"></a>Facade外观模式</h3><p>提供一个高层接口，使得客户端或子系统更加方便调用。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//非外观</span></span><br><span class="line"><span class="keyword">var</span> getName =<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'hahah'</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> getAge = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">22</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//外观模式</span></span><br><span class="line"><span class="keyword">var</span> getInfo = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"> <span class="keyword">var</span> info = getName() + getAge();</span><br><span class="line"> <span class="keyword">return</span> info;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Iterator迭代器模式"><a href="#Iterator迭代器模式" class="headerlink" title="Iterator迭代器模式"></a>Iterator迭代器模式</h3><p>each()函数就是迭代器模式</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">each:<span class="function"><span class="keyword">function</span>(<span class="params">callback,args</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> jQuery.each(<span class="keyword">this</span>,callback,args);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="proxy代理模式"><a href="#proxy代理模式" class="headerlink" title="proxy代理模式"></a>proxy代理模式</h3><p>代理模式就是把一个对象的访问，交给另一个代理对象来操作。</p>
+<h3 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h3><p>定义一系列算法，把它们封装起来，并使他们可以相互替换。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$(div).animate(&#123;<span class="string">"left:200px"</span>&#125;,<span class="number">1000</span>,<span class="string">'linear'</span>);  <span class="comment">//匀速运动</span></span><br><span class="line">$(div).animate(&#123;<span class="string">"left:200px"</span>&#125;,<span class="number">1000</span>,<span class="string">'cubic'</span>);   <span class="comment">//三次方缓动</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">nameInput.addValidata(&#123;</span><br><span class="line">    notNull:<span class="literal">true</span>;</span><br><span class="line">    drityWords:<span class="literal">true</span>;</span><br><span class="line">    maxLength:<span class="number">30</span>;</span><br><span class="line">&#125;)</span><br><span class="line">validataList =&#123;</span><br><span class="line">    notNull:<span class="function"><span class="keyword">function</span>(<span class="params">value</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> value !==<span class="string">''</span>;</span><br><span class="line">    &#125;,</span><br><span class="line">    maxLength:<span class="function"><span class="keyword">function</span>(<span class="params">value</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> value.length() &gt;maxLen;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="备忘录模式"><a href="#备忘录模式" class="headerlink" title="备忘录模式"></a>备忘录模式</h3><p>备忘录模式常用于数据缓存</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Page = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">   <span class="keyword">var</span> page = <span class="number">1</span>,</span><br><span class="line">      cache = &#123;&#125;,</span><br><span class="line">      data;</span><br><span class="line">   <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"> page </span>)</span>&#123;</span><br><span class="line">      <span class="keyword">if</span> ( cache[ page ] )&#123;</span><br><span class="line">               data =  cache[ page ];</span><br><span class="line">               render( data );</span><br><span class="line">      &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">               Ajax.send( <span class="string">'cgi.xx.com/xxx'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"> data </span>)</span>&#123;</span><br><span class="line">                   cache[ page ] = data;</span><br><span class="line">                   render( data );</span><br><span class="line">               &#125;)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;()</span><br></pre></td></tr></table></figure>
+
+<h3 id="职责链模式"><a href="#职责链模式" class="headerlink" title="职责链模式"></a>职责链模式</h3><p>职责链模式是一个对象A向另一个对象B发起请求，如果B不处理，可以把请求转给C，如果C不处理，又可以把请求转给D。一直到有一个对象愿意处理这个请求为止。<br>打个比方，客户让老板写个php程序。老板肯定不写，然后老板交给了部门经理。部门经理不愿意写，又交给项目经理。项目经理不会写，又交给程序员。最后由码农来完成。</p>
+<p>在这个假设里， 有几条职责链模式的特点。<br>1 老板只跟部门经理打交道，部门经理只联系项目经理，项目经理只找码农的麻烦。<br>2 如果码农也不写，这个项目将会流产。<br>3 客户并不清楚这个程序最后是由谁写出来的。<br>js中的事件冒泡就是作为一个职责链来实现的。一个事件在某个节点上被触发，然后向根节点传递， 直到被节点捕获。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/FE/" rel="tag"># FE</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/04/05/2017-04-05-react-router/" rel="prev" title="react router">
+      <i class="fa fa-chevron-left"></i> react router
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/07/01/2017-07-01-jquery%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" rel="next" title="Jquery源码解析">
+      Jquery源码解析 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JS设计模式"><span class="nav-number">1.</span> <span class="nav-text">JS设计模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是模式"><span class="nav-number">1.1.</span> <span class="nav-text">什么是模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#优点"><span class="nav-number">1.1.1.</span> <span class="nav-text">优点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模式状态测试、Proto模式及三法则"><span class="nav-number">1.2.</span> <span class="nav-text">模式状态测试、Proto模式及三法则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设计模式的结构"><span class="nav-number">1.3.</span> <span class="nav-text">设计模式的结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设计模式类别"><span class="nav-number">1.4.</span> <span class="nav-text">设计模式类别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#js设计模式"><span class="nav-number">1.5.</span> <span class="nav-text">js设计模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Constructor模式"><span class="nav-number">1.5.1.</span> <span class="nav-text">Constructor模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#对象创建"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">对象创建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基本Constructor"><span class="nav-number">1.5.1.2.</span> <span class="nav-text">基本Constructor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#带原型的Constructor"><span class="nav-number">1.5.1.3.</span> <span class="nav-text">带原型的Constructor</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Module模式"><span class="nav-number">1.5.2.</span> <span class="nav-text">Module模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#对象字面量"><span class="nav-number">1.5.2.1.</span> <span class="nav-text">对象字面量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Module模式-1"><span class="nav-number">1.5.2.2.</span> <span class="nav-text">Module模式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#私有"><span class="nav-number">1.5.2.2.1.</span> <span class="nav-text">私有</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Module模块变化"><span class="nav-number">1.5.3.</span> <span class="nav-text">Module模块变化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#引入混入"><span class="nav-number">1.5.3.1.</span> <span class="nav-text">引入混入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#引出"><span class="nav-number">1.5.3.2.</span> <span class="nav-text">引出</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#优点-1"><span class="nav-number">1.5.3.3.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#缺点"><span class="nav-number">1.5.3.4.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Observer观察者模式"><span class="nav-number">1.5.4.</span> <span class="nav-text">Observer观察者模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Observer模式和Publish-Subscribe模式的区别"><span class="nav-number">1.5.4.1.</span> <span class="nav-text">Observer模式和Publish&#x2F;Subscribe模式的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Observer优点"><span class="nav-number">1.5.4.2.</span> <span class="nav-text">Observer优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Publish-Subscribe实现"><span class="nav-number">1.5.4.3.</span> <span class="nav-text">Publish&#x2F;Subscribe实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Publish-Subscribe实现-1"><span class="nav-number">1.5.4.4.</span> <span class="nav-text">Publish&#x2F;Subscribe实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mediator-中介者-模式"><span class="nav-number">1.5.5.</span> <span class="nav-text">Mediator(中介者)模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Prototype（原型）模式"><span class="nav-number">1.5.6.</span> <span class="nav-text">Prototype（原型）模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Command（命令）模式"><span class="nav-number">1.5.7.</span> <span class="nav-text">Command（命令）模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Facade（外观）模式"><span class="nav-number">1.5.8.</span> <span class="nav-text">Facade（外观）模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Factory工厂模式"><span class="nav-number">1.5.9.</span> <span class="nav-text">Factory工厂模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#装饰者模式"><span class="nav-number">1.5.10.</span> <span class="nav-text">装饰者模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Flyweight-享元-模式"><span class="nav-number">1.5.11.</span> <span class="nav-text">Flyweight(享元)模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MV-模式"><span class="nav-number">1.5.12.</span> <span class="nav-text">MV*模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MVC模式"><span class="nav-number">1.5.12.1.</span> <span class="nav-text">MVC模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MVP模式"><span class="nav-number">1.5.12.2.</span> <span class="nav-text">MVP模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MVVM模式"><span class="nav-number">1.5.12.3.</span> <span class="nav-text">MVVM模式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jquery中的设计模式"><span class="nav-number">1.5.13.</span> <span class="nav-text">jquery中的设计模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Composite组合模式"><span class="nav-number">1.5.14.</span> <span class="nav-text">Composite组合模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Adapter适配器模式"><span class="nav-number">1.5.15.</span> <span class="nav-text">Adapter适配器模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Facade外观模式"><span class="nav-number">1.5.16.</span> <span class="nav-text">Facade外观模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Iterator迭代器模式"><span class="nav-number">1.5.17.</span> <span class="nav-text">Iterator迭代器模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#proxy代理模式"><span class="nav-number">1.5.18.</span> <span class="nav-text">proxy代理模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#策略模式"><span class="nav-number">1.5.19.</span> <span class="nav-text">策略模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#备忘录模式"><span class="nav-number">1.5.20.</span> <span class="nav-text">备忘录模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#职责链模式"><span class="nav-number">1.5.21.</span> <span class="nav-text">职责链模式</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Doreen</p>
+  <div class="site-description" itemprop="description">this  is a personal recordings for study & life</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Doreen</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="https://cdn.jsdelivr.net/npm/live2d-widget@^3.1.3/lib/L2Dwidget.min.js"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/assets/hijiki.model.json"},"display":{"superSample":2,"width":165,"height":155,"position":"right","vOffset":-20},"mobile":{"show":false,"scale":0.05},"react":{"opacityDefault":1,"opacityOnHover":0.2},"log":false});</script></body>
+</html>
