@@ -1,0 +1,7 @@
+# Hexo site specific ignores
+public/
+.deploy_cache/
+.deploy_git/
+db.json
+_debug/
+node_modules/

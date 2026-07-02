@@ -1,0 +1,229 @@
+# ==================================================
+# NexT Theme Configuration v8.x
+# Scheme: Muse
+# Source: Reversed from existing static build CONFIG object
+# ==================================================
+
+# ----------------------------------------------------
+# Scheme Settings
+# ----------------------------------------------------
+scheme: Muse
+
+# ----------------------------------------------------
+# Site Information Settings
+# ----------------------------------------------------
+favicon:
+  small: /images/favicon-16x16-next.png
+  medium: /images/favicon-32x32-next.png
+  apple_touch_icon: /images/apple-touch-icon-next.png
+  safari_pinned_tab: /images/logo.svg
+
+footer:
+  since: 2017
+  icon:
+    name: user
+    animated: false
+    color: "#808080"
+  copyright: Doreen
+  powered: true
+
+  creative_commons:
+    license: by-nc-sa
+    sidebar: false
+    post: true
+    language:
+
+# ----------------------------------------------------
+# SEO Settings
+# ----------------------------------------------------
+index_with_subtitle: false
+post_meta:
+  text_align: center
+  item_text_center: false
+  item_date: true
+  item_updated:
+    enable: true
+    another_day: true
+  categories: true
+tags:
+  text_align: center
+
+# ----------------------------------------------------  
+# Navigation Menu Settings  
+# ----------------------------------------------------
+menu:
+  home: / || fa fa-home
+  archives: /archives/ || fa fa-archive
+
+# ----------------------------------------------------
+# Sidebar Settings
+# ----------------------------------------------------
+sidebar:
+  position: left
+  display: post
+  padding: 18
+  offset: 12
+
+# ----------------------------------------------------
+# Posts / Articles Settings
+# ----------------------------------------------------
+posts_expand: true
+
+auto_excerpt:
+  enable: false
+  length: 150
+
+post_edit:
+  enable: false
+
+post_navigation: left
+
+back2top:
+  enable: true
+  sidebar: false
+  scrollpercent: false
+
+reading_progress:
+  enable: false
+  color: "#37c6c0"
+  height: 3px
+
+bookmark:
+  enable: false
+  save: auto
+  color: "#222"
+
+follow:
+  enable: false
+
+# ----------------------------------------------------
+# Code Copy Settings
+# ----------------------------------------------------
+copy_code:
+  enable: false
+  show_result: false
+  style: default
+
+# ----------------------------------------------------
+# Image Settings
+# ----------------------------------------------------
+image_caption: left
+lazyload: false
+fancybox: false
+mediumzoom: false
+
+# ----------------------------------------------------
+# Brand Settings
+# ----------------------------------------------------
+brand:
+  background: '#222'
+
+# ----------------------------------------------------
+# Motion Settings (NexT 8.x format)
+# ----------------------------------------------------
+motion:
+  enable: true
+  async: false
+  transition:
+    post_block: fadeIn
+    post_header: slideDownIn
+    post_body: slideDownIn
+    coll_header: slideLeftIn
+    sidebar: slideUpIn
+
+# ----------------------------------------------------
+# Search Services
+# ----------------------------------------------------
+local_search:
+  enable: false
+  trigger: auto
+  top_n_per_article: 1
+  unescape: false
+  preload: false
+
+algolia_search:
+  enable: true
+  hits:
+    per_page: 10
+  labels:
+    input_placeholder: Search for Posts
+    hits_empty: "We didn't find any results for the search: ${query}"
+    hits_stats: "${hits} results found in ${time} ms"
+
+# ----------------------------------------------------
+# Comment Settings
+# ----------------------------------------------------
+comments:
+  style: tabs
+  active: null
+  storage: true
+  lazyload: false
+  nav: null
+
+# ----------------------------------------------------
+# Post Widgets & Content Sharing
+# ----------------------------------------------------
+reward_settings:
+  enable: false
+
+related_post:
+  enable: false
+
+post_widgets:
+  rating: false
+  category: false
+  tag: false
+
+# social:
+  #GitHub: https://github.com/yourname || fab fa-github
+  #E-Mail: mailto:yourname@gmail.com || fa fa-envelope
+
+# ----------------------------------------------------
+# Statistics System
+# ----------------------------------------------------
+leancloud_visitors:
+  enable: false
+
+# ----------------------------------------------------
+# Third-party Plugins
+# ----------------------------------------------------
+pangu: false
+
+quicklink:
+  enable: false
+
+exturl: false
+
+# ----------------------------------------------------
+# Animation Settings
+# ----------------------------------------------------
+animejs: true
+velocityjs: true
+
+# ----------------------------------------------------
+# Live2D 看板娘
+# ----------------------------------------------------
+live2d:
+  enable: true
+  pluginRootPath: live2dw/
+  pluginJsPath: lib/
+  pluginModelPath: assets/
+  tagMode: false
+  debug: false
+  model:
+    use: live2d-widget-model-hijiki
+    scale: 1
+    hHeadPos: 0.5
+    vHeadPos: 0.618
+  display:
+    superSample: 2
+    width: 165
+    height: 155
+    position: right
+    vOffset: -20
+  mobile:
+    show: false
+    scale: 0.05
+  react:
+    opacityDefault: 1
+    opacityOnHover: 0.2
