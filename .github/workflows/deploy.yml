@@ -26,11 +26,8 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Update npm
-        run: npm install -g npm@latest
-
       - name: Install dependencies
-        run: cd site && npm install --no-audit --no-fund
+        run: cd site && npm ci --no-audit --no-fund
 
       - name: Build
         run: cd site && npm run build
