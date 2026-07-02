@@ -24,12 +24,10 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          cache: 'npm'
-          cache-dependency-path: site/package-lock.json
+          node-version: '20'
 
       - name: Install dependencies
-        run: cd site && npm ci
+        run: cd site && npm install
 
       - name: Build
         run: cd site && npm run build
